@@ -1,0 +1,45 @@
+﻿@model IEnumerable<NexusMD.Data.PatientProfile>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Appointment.Notes)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Doctor.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Patient.FirstName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Appointment.Notes)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Doctor.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Patient.FirstName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.PatientProfileId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.PatientProfileId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.PatientProfileId })
+        </td>
+    </tr>
+}
+
+</table>

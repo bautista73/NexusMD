@@ -4,12 +4,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NexusMD.MVC", "NexusMD.MVC.csproj", "{03606F0B-E66A-4C61-9FFF-E2A80BC2E255}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0D19F408-EEC1-4E46-8FAC-D2C550AB7161} = {0D19F408-EEC1-4E46-8FAC-D2C550AB7161}
+		{F952F59F-A620-4755-9D10-18AC4233E78A} = {F952F59F-A620-4755-9D10-18AC4233E78A}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NexusMD.Data", "..\NexusMD.Data\NexusMD.Data.csproj", "{E6C4431E-1CCF-482E-9E2C-6DEC03DFB547}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NexusMD.Models", "..\NexusMD.Models\NexusMD.Models.csproj", "{F952F59F-A620-4755-9D10-18AC4233E78A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E6C4431E-1CCF-482E-9E2C-6DEC03DFB547} = {E6C4431E-1CCF-482E-9E2C-6DEC03DFB547}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NexusMD.Services", "..\NexusMD.Services\NexusMD.Services.csproj", "{0D19F408-EEC1-4E46-8FAC-D2C550AB7161}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E6C4431E-1CCF-482E-9E2C-6DEC03DFB547} = {E6C4431E-1CCF-482E-9E2C-6DEC03DFB547}
+		{F952F59F-A620-4755-9D10-18AC4233E78A} = {F952F59F-A620-4755-9D10-18AC4233E78A}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

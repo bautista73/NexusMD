@@ -1,0 +1,74 @@
+﻿@model NexusMD.Data.Appointment
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Appointment</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Doctor.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Doctor.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Patient.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Patient.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AppStart)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AppStart)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AppEnd)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AppEnd)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ScheduledTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ScheduledTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Notes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Notes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Confirmation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Confirmation)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.AppointmentId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
