@@ -7,122 +7,112 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using NexusMD.Data;
+using NexusMD.Models.Doctor;
+using NexusMD.Services;
 
 namespace NexusMD.MVC.Controllers
 {
     [Authorize]
-    public class DoctorsController : Controller
+    public class DoctorController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
-
-        // GET: Doctors
         public ActionResult Index()
         {
-            return View(db.Doctors.ToList());
+            var service = new DoctorService();
+            var doctorModel = service.GetAllDoctors();
+            return View(doctorModel);
         }
 
-        // GET: Doctors/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Doctor doctor = db.Doctors.Find(id);
-            if (doctor == null)
-            {
-                return HttpNotFound();
-            }
-            return View(doctor);
-        }
-
-        // GET: Doctors/Create
         public ActionResult Create()
         {
-            return View();
+            var doctorModel = new DoctorCreate();
+            return View(doctorModel);
         }
 
-        // POST: Doctors/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        public ActionResult Detail(int id)
+        {
+            var service = new DoctorService();
+            var doctorModel = service.GetDoctorById(id);
+
+            return View(doctorModel);
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "DoctorId,FirstName,LastName,PhoneNumber,Availability,Specialization")] Doctor doctor)
+        public ActionResult Create(DoctorCreate doctorModel)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                db.Doctors.Add(doctor);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                var service = new DoctorService();
+                if (service.CreateDoctor(doctorModel))
+                {
+                    return RedirectToAction("Index");
+                }
             }
-
-            return View(doctor);
+            return View(doctorModel);
         }
 
-        // GET: Doctors/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Doctor doctor = db.Doctors.Find(id);
-            if (doctor == null)
-            {
-                return HttpNotFound();
-            }
-            return View(doctor);
-        }
-
-        // POST: Doctors/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "DoctorId,FirstName,LastName,PhoneNumber,Availability,Specialization")] Doctor doctor)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(doctor).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(doctor);
-        }
-
-        // GET: Doctors/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Doctor doctor = db.Doctors.Find(id);
-            if (doctor == null)
-            {
-                return HttpNotFound();
-            }
-            return View(doctor);
+            var service = new DoctorService();
+            var doctorModel = service.GetDoctorById((int)id);
+            return View(doctorModel);
         }
 
-        // POST: Doctors/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteDoctorById(int id)
         {
-            Doctor doctor = db.Doctors.Find(id);
-            db.Doctors.Remove(doctor);
-            db.SaveChanges();
+            var service = new DoctorService();
+            service.DeleteDoctor(id);
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
+        public ActionResult Edit(int? id)
         {
-            if (disposing)
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var service = new DoctorService();
+            var edit = service.GetDoctorById((int)id);
+
+            if (edit == null)
+                return HttpNotFound();
+
+            var doctorModel = new DoctorEdit()
             {
-                db.Dispose();
+                DoctorId = edit.DoctorId,
+                FirstName = edit.FirstName,
+                LastName = edit.LastName,
+                PhoneNumber = edit.PhoneNumber,
+                Specialization = edit.Specialization
+            };
+
+            return View(doctorModel);
+        }
+
+        [HttpPost]
+        [ActionName("Edit")]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(int id, DoctorEdit doctorModel)
+        {
+            if (ModelState.IsValid)
+            {
+                if (doctorModel.DoctorId != id)
+                    return View(doctorModel);
             }
-            base.Dispose(disposing);
+            var service = new DoctorService();
+
+            if (service.UpdateDoctor(doctorModel))
+            {
+                return RedirectToAction("Index");
+            }
+
+            return View(doctorModel);
         }
     }
+   
 }

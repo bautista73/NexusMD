@@ -239,11 +239,6 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Doctors\Create.cshtml" />
-    <Content Include="Views\Doctors\Delete.cshtml" />
-    <Content Include="Views\Doctors\Details.cshtml" />
-    <Content Include="Views\Doctors\Edit.cshtml" />
-    <Content Include="Views\Doctors\Index.cshtml" />
     <Content Include="Views\Patients\Create.cshtml" />
     <Content Include="Views\Patients\Delete.cshtml" />
     <Content Include="Views\Patients\Details.cshtml" />
@@ -264,6 +259,7 @@
     <Content Include="Views\PatientProfiles\Details.cshtml" />
     <Content Include="Views\PatientProfiles\Edit.cshtml" />
     <Content Include="Views\PatientProfiles\Index.cshtml" />
+    <Content Include="Views\Doctor\DoctorCreate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -285,6 +281,14 @@
     <ProjectReference Include="..\NexusMD.Data\NexusMD.Data.csproj">
       <Project>{E6C4431E-1CCF-482E-9E2C-6DEC03DFB547}</Project>
       <Name>NexusMD.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NexusMD.Models\NexusMD.Models.csproj">
+      <Project>{f952f59f-a620-4755-9d10-18ac4233e78a}</Project>
+      <Name>NexusMD.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NexusMD.Services\NexusMD.Services.csproj">
+      <Project>{0d19f408-eec1-4e46-8fac-d2c550ab7161}</Project>
+      <Name>NexusMD.Services</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
