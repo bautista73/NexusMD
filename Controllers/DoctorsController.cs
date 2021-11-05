@@ -7,48 +7,76 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using NexusMD.Data;
-using NexusMD.Models.Doctor;
-using NexusMD.Services;
 
 namespace NexusMD.MVC.Controllers
 {
-    [Authorize]
-    public class DoctorController : Controller
+    public class DoctorsController : Controller
     {
+        private ApplicationDbContext db = new ApplicationDbContext();
+
         public ActionResult Index()
         {
-            var service = new DoctorService();
-            var doctorModel = service.GetAllDoctors();
-            return View(doctorModel);
+            return View(db.Doctors.ToList());
+        }
+
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Doctor doctor = db.Doctors.Find(id);
+            if (doctor == null)
+            {
+                return HttpNotFound();
+            }
+            return View(doctor);
         }
 
         public ActionResult Create()
         {
-            var doctorModel = new DoctorCreate();
-            return View(doctorModel);
-        }
-
-        public ActionResult Detail(int id)
-        {
-            var service = new DoctorService();
-            var doctorModel = service.GetDoctorById(id);
-
-            return View(doctorModel);
+            return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(DoctorCreate doctorModel)
+        public ActionResult Create(Doctor doctor)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                var service = new DoctorService();
-                if (service.CreateDoctor(doctorModel))
-                {
-                    return RedirectToAction("Index");
-                }
+                db.Doctors.Add(doctor);
+                db.SaveChanges();
+                return RedirectToAction("Index");
             }
-            return View(doctorModel);
+
+            return View(doctor);
+        }
+
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Doctor doctor = db.Doctors.Find(id);
+            if (doctor == null)
+            {
+                return HttpNotFound();
+            }
+            return View(doctor);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(Doctor doctor)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(doctor).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(doctor);
         }
 
         public ActionResult Delete(int? id)
@@ -57,62 +85,22 @@ namespace NexusMD.MVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var service = new DoctorService();
-            var doctorModel = service.GetDoctorById((int)id);
-            return View(doctorModel);
+            Doctor doctor = db.Doctors.Find(id);
+            if (doctor == null)
+            {
+                return HttpNotFound();
+            }
+            return View(doctor);
         }
 
-        [HttpPost]
-        [ActionName("Delete")]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteDoctorById(int id)
+        public ActionResult DeleteConfirmed(int id)
         {
-            var service = new DoctorService();
-            service.DeleteDoctor(id);
+            Doctor doctor = db.Doctors.Find(id);
+            db.Doctors.Remove(doctor);
+            db.SaveChanges();
             return RedirectToAction("Index");
         }
-
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var service = new DoctorService();
-            var edit = service.GetDoctorById((int)id);
-
-            if (edit == null)
-                return HttpNotFound();
-
-            var doctorModel = new DoctorEdit()
-            {
-                DoctorId = edit.DoctorId,
-                FirstName = edit.FirstName,
-                LastName = edit.LastName,
-                PhoneNumber = edit.PhoneNumber,
-                Specialization = edit.Specialization
-            };
-
-            return View(doctorModel);
-        }
-
-        [HttpPost]
-        [ActionName("Edit")]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, DoctorEdit doctorModel)
-        {
-            if (ModelState.IsValid)
-            {
-                if (doctorModel.DoctorId != id)
-                    return View(doctorModel);
-            }
-            var service = new DoctorService();
-
-            if (service.UpdateDoctor(doctorModel))
-            {
-                return RedirectToAction("Index");
-            }
-
-            return View(doctorModel);
-        }
     }
-   
 }
