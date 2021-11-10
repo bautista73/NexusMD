@@ -24,7 +24,7 @@
             @Html.DisplayNameFor(model => model.Remarks)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Date)
+            @Html.DisplayNameFor(model => model.DateLastUpdated)
         </th>
         <th></th>
     </tr>
@@ -44,7 +44,7 @@
             @Html.DisplayFor(modelItem => item.Remarks)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Date)
+            @Html.DisplayFor(modelItem => item.DateLastUpdated)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.VisitId }) |
