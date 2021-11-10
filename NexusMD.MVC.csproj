@@ -254,16 +254,16 @@
     <Content Include="Views\Visits\Details.cshtml" />
     <Content Include="Views\Visits\Edit.cshtml" />
     <Content Include="Views\Visits\Index.cshtml" />
-    <Content Include="Views\PatientProfiles\Create.cshtml" />
-    <Content Include="Views\PatientProfiles\Delete.cshtml" />
-    <Content Include="Views\PatientProfiles\Details.cshtml" />
-    <Content Include="Views\PatientProfiles\Edit.cshtml" />
-    <Content Include="Views\PatientProfiles\Index.cshtml" />
     <Content Include="Views\Doctors\Create.cshtml" />
     <Content Include="Views\Doctors\Delete.cshtml" />
     <Content Include="Views\Doctors\Details.cshtml" />
     <Content Include="Views\Doctors\Edit.cshtml" />
     <Content Include="Views\Doctors\Index.cshtml" />
+    <Content Include="Views\PatientProfiles\Create.cshtml" />
+    <Content Include="Views\PatientProfiles\Delete.cshtml" />
+    <Content Include="Views\PatientProfiles\Details.cshtml" />
+    <Content Include="Views\PatientProfiles\Edit.cshtml" />
+    <Content Include="Views\PatientProfiles\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
