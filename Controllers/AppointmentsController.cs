@@ -6,6 +6,8 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.WebPages.Html;
+using DocumentFormat.OpenXml.Wordprocessing;
 using NexusMD.Data;
 using NexusMD.Models.Appointment;
 using NexusMD.Services;
@@ -15,6 +17,8 @@ namespace NexusMD.MVC.Controllers
     public class AppointmentsController : Controller
     {
         private readonly AppointmentService db = new AppointmentService();
+
+        private readonly ApplicationDbContext _db = new ApplicationDbContext();
 
         public ActionResult Index(int? id)
         {
@@ -27,7 +31,7 @@ namespace NexusMD.MVC.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var viewModel = db.GetAppointmentById((int)id);
           
@@ -40,58 +44,26 @@ namespace NexusMD.MVC.Controllers
 
         public ActionResult Create()
         {
-            var viewModel = new AppointmentCreate();
+            AppointmentCreate model = new AppointmentCreate
+            {
+                PatientList = new SelectList(_db.Patients, "PatientId"),
+                DoctorList = new SelectList(_db.Doctors, "DoctorId")
+            };
 
-            var patientServices = new PatientServices();
-            TempData["Patients"] = patientServices.
-                GetAllPatients()
-                .Select
-                (e => new SelectListItem
-                {
-                    Text = e.FirstName,
-                    Value = e.PatientId.ToString()
-                });
-
-            var doctorServices = new DoctorService();
-            TempData["Doctors"] = doctorServices.
-                GetAllDoctors()
-                .Select
-                (e => new SelectListItem
-                {
-                    Text = e.FirstName,
-                    Value = e.DoctorId.ToString()
-                });
-
-            return View(viewModel);
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(AppointmentCreate model)
+        public ActionResult Create(Appointment appointment)
         {
-            var viewModel = new AppointmentCreate();
+            AppointmentCreate model = new AppointmentCreate
+            {
+                PatientList = new SelectList(_db.Patients, "PatientId"),
+                DoctorList = new SelectList(_db.Doctors, "DoctorId")
+            };
 
-            var patientServices = new PatientServices();
-            TempData["Patients"] = patientServices.
-                GetAllPatients()
-                .Select
-                (e => new SelectListItem
-                {
-                    Text = e.FirstName,
-                    Value = e.PatientId.ToString()
-                });
-
-            var doctorServices = new DoctorService();
-            TempData["Doctors"] = doctorServices.
-                GetAllDoctors()
-                .Select
-                (e => new SelectListItem
-                {
-                    Text = e.FirstName,
-                    Value = e.DoctorId.ToString()
-                });
-
-            return View(viewModel);
+            return View(model);
         }
 
         public ActionResult Delete(int? id)
