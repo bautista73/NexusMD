@@ -11604,7 +11604,7 @@ body:not(.layout-fixed).layout-navbar-fixed.text-sm .wrapper .main-sidebar .side
 .layout-top-nav .wrapper .main-header .brand-image {
   margin-top: -.5rem;
   margin-right: .2rem;
-  height: 33px;
+  height: 53px;
 }
 
 .layout-top-nav .wrapper .main-sidebar {
@@ -44396,6 +44396,10 @@ select.form-control-sm ~ .select2-container--default .select2-selection--multipl
 
 .img-circle {
   border-radius: 50%;
+}
+
+.img-circle2 {
+    border-radius: 60%;
 }
 
 .img-size-64,
