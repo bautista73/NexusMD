@@ -2,38 +2,70 @@
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
+@*<div class="jumbotron">
     <h1>NexusMD</h1>
     <p class="lead">Welcome to Nexus MD, the next generation in Patient Managment Systems.</p>
-</div>
+</div>*@
 
 <div class="row">
     <div class="col-lg-3 col-xs-6">
         <div class="small-box bg-gradient-success">
             <div class="inner">
-                <h3>5</h3>
+                <h3>1</h3>
                 <p>Doctors</p>
             </div>
             <div class="icon">
-                <i class="fas fa-user-plus"></i>
+                <i class="fas fa-stethoscope"></i>
             </div>
             <a href="/Doctors/" class="small-box-footer">
                 More Info <i class="fas fa-caret-right"> </i>
             </a>
         </div>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+    <div class="col-lg-3 col-xs-6">
+        <div class="small-box bg-info">
+            <div class="inner">
+                <h3>5</h3>
+                <p>Patients</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-user-injured"></i>
+            </div>
+            <a href="/Patients/" class="small-box-footer">
+                More info <i class="fas fa-arrow-circle-right"></i>
+            </a>
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+    <div class="col-lg-3 col-xs-6">
+        <div class="small-box bg-purple">
+            <div class="inner">
+                <h3>2</h3>
+                <p>Appointments</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-calendar-check"></i>
+            </div>
+            <a href="/Appointments/" class="small-box-footer">
+                More info <i class="fas fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-xs-6">
+        <div class="small-box bg-pink">
+            <div class="inner">
+                <h3>0</h3>
+                <p>New Patient</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-user-plus"></i>
+            </div>
+            <a href="/Patients/Create" class="small-box-footer">
+                More info <i class="fas fa-arrow-circle-right"></i>
+            </a>
+        </div>
     </div>
 </div>
+<div id='calendar'></div>
 @section scripts {
     <script>
         document.addEventListener('DOMContentLoaded', function () {

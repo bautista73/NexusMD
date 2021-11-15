@@ -27562,7 +27562,7 @@ body.text-sm .input-group-text {
 .bg-maroon > .card-header .btn-tool,
 .bg-gradient-maroon > .card-header .btn-tool,
 .card-maroon:not(.card-outline) > .card-header .btn-tool {
-  color: rgba(255, 255, 255, 0.8);
+  color: #fff;
 }
 
 .bg-maroon > .card-header .btn-tool:hover,

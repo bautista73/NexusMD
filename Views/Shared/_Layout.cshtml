@@ -26,10 +26,19 @@
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    @Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link" })
+                    @Html.ActionLink("Dashboard", "Index", "Home", null, new { @class = "nav-link" })
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    @Html.ActionLink("Contact", "Contact", "Home", null, new { @class = "nav-link" })
+                    @Html.ActionLink("Doctor Profiles", "Index", "/Doctors/Index", null, new { @class = "nav-link" })
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    @Html.ActionLink("Patient Profiles", "Index", "PatientProfiles/Index", null, new { @class = "nav-link" })
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    @Html.ActionLink("Appointment Listed", "Index", "Appointments/Index", null, new { @class = "nav-link" })
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    @Html.ActionLink("Visit Notes", "Index", "Visits/Index", null, new { @class = "nav-link" })
                 </li>
             </ul>
 

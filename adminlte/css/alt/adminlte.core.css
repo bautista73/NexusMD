@@ -26317,25 +26317,25 @@ a.text-muted:hover {
   color: #fff;
 }
 
-.dark-mode .bg-maroon {
+/*.dark-mode .bg-maroon {
   background-color: #ed6c9b !important;
-}
+}*/
 
 .dark-mode .bg-maroon,
 .dark-mode .bg-maroon > a {
-  color: #1f2d3d !important;
+  color: #fff !important;
 }
 
-.dark-mode .bg-maroon.btn:hover {
+/*.dark-mode .bg-maroon.btn:hover {
   border-color: #e73f7c;
-  color: #121a24;
-}
+  color: #fff;
+}*/
 
-.dark-mode .bg-maroon.btn:not(:disabled):not(.disabled):active, .dark-mode .bg-maroon.btn:not(:disabled):not(.disabled).active, .dark-mode .bg-maroon.btn:active, .dark-mode .bg-maroon.btn.active {
+/*.dark-mode .bg-maroon.btn:not(:disabled):not(.disabled):active, .dark-mode .bg-maroon.btn:not(:disabled):not(.disabled).active, .dark-mode .bg-maroon.btn:active, .dark-mode .bg-maroon.btn.active {
   background-color: #e73f7c !important;
   border-color: #e63475;
   color: #fff;
-}
+}*/
 
 .dark-mode .bg-blue {
   background-color: #3f6791 !important;
