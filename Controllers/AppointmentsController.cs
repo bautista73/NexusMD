@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.WebPages.Html;
+using DocumentFormat.OpenXml.Spreadsheet;
 using DocumentFormat.OpenXml.Wordprocessing;
 using NexusMD.Data;
 using NexusMD.Models.Appointment;
@@ -20,6 +21,8 @@ namespace NexusMD.MVC.Controllers
 
         public ActionResult Index()
         {
+            var projects = _db.Patients.Include(p => p.FullName).Include(p => p.PatientId);
+            var project = _db.Doctors.Include(p => p.FullName).Include(p => p.DoctorId);
             return View(_db.Appointments.ToList());
         }
 
@@ -57,6 +60,7 @@ namespace NexusMD.MVC.Controllers
             {
                 _db.Appointments.Add(appointment);
                 _db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
             //AppointmentCreate model = new AppointmentCreate
