@@ -1,4 +1,4 @@
-﻿@model IEnumerable<NexusMD.Data.Appointment>
+﻿@model IEnumerable<NexusMD.Models.Appointment.AppointmentListItem>
 
 @{
     ViewBag.Title = "Index";
@@ -18,13 +18,13 @@
             @Html.DisplayNameFor(model => model.Patient)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.AppointmentStart)
+            @Html.DisplayNameFor(model => model.AppointmentId)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.AppointmentEnd)
+            @Html.DisplayNameFor(model => model.StartDateTime)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ScheduledDate)
+            @Html.DisplayNameFor(model => model.Status)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Notes)
@@ -44,13 +44,13 @@
             @Html.DisplayFor(modelItem => item.Patient)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.AppointmentStart)
+            @Html.DisplayFor(modelItem => item.AppointmentId)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.AppointmentEnd)
+            @Html.DisplayFor(modelItem => item.StartDateTime)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ScheduledDate)
+            @Html.DisplayFor(modelItem => item.Status)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Notes)

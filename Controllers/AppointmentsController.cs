@@ -16,10 +16,11 @@ namespace NexusMD.MVC.Controllers
     {
         private readonly AppointmentService db = new AppointmentService();
 
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
-            var viewModel = db.GetAllAppointments();
-            return View(viewModel);
+            var model = db.GetAllAppointments((int)id);
+
+            return View(model);
         }
 
         public ActionResult Details(int? id)
@@ -40,6 +41,27 @@ namespace NexusMD.MVC.Controllers
         public ActionResult Create()
         {
             var viewModel = new AppointmentCreate();
+
+            var patientServices = new PatientServices();
+            TempData["Patients"] = patientServices.
+                GetAllPatients()
+                .Select
+                (e => new SelectListItem
+                {
+                    Text = e.FirstName,
+                    Value = e.PatientId.ToString()
+                });
+
+            var doctorServices = new DoctorService();
+            TempData["Doctors"] = doctorServices.
+                GetAllDoctors()
+                .Select
+                (e => new SelectListItem
+                {
+                    Text = e.FirstName,
+                    Value = e.DoctorId.ToString()
+                });
+
             return View(viewModel);
         }
 
@@ -47,28 +69,38 @@ namespace NexusMD.MVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(AppointmentCreate model)
         {
-            if (ModelState.IsValid)
-            {
-                if (db.CreateAppointment(model))
+            var viewModel = new AppointmentCreate();
+
+            var patientServices = new PatientServices();
+            TempData["Patients"] = patientServices.
+                GetAllPatients()
+                .Select
+                (e => new SelectListItem
                 {
-                    TempData["SaveResult"] = "A new appointment was created.";
-                    return RedirectToAction("Index");
-                }
-            }
-            return View(model);
+                    Text = e.FirstName,
+                    Value = e.PatientId.ToString()
+                });
+
+            var doctorServices = new DoctorService();
+            TempData["Doctors"] = doctorServices.
+                GetAllDoctors()
+                .Select
+                (e => new SelectListItem
+                {
+                    Text = e.FirstName,
+                    Value = e.DoctorId.ToString()
+                });
+
+            return View(viewModel);
         }
 
         public ActionResult Delete(int? id)
         {
             if (id == null)
-                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             var viewModel = db.GetAppointmentById((int)id);
-
-            if (viewModel is null)
-                return HttpNotFound();
-
-            return View(viewModel);
+                return View(viewModel);
         }
 
 
@@ -77,13 +109,7 @@ namespace NexusMD.MVC.Controllers
         public ActionResult Delete(int id)
         {
             if (db.DeleteAppointment(id))
-            {
-                TempData["SaveResult"] = "An appointment was deleted.";
                 return RedirectToAction("Index");
-            }
-
-
-            ModelState.AddModelError("", "Appointment could not be deleted.");
 
             return View();
         }
@@ -91,7 +117,7 @@ namespace NexusMD.MVC.Controllers
         public ActionResult Edit(int? id)
         {
             if (id == null)
-                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             var detail = db.GetAppointmentById((int)id);
 
@@ -102,7 +128,6 @@ namespace NexusMD.MVC.Controllers
             {
                 AppointmentId = detail.AppointmentId,
                 StartDateTime = detail.StartDateTime,
-                DoctorId = detail.DoctorId,
                 Status = detail.Status,
                 Notes = detail.Notes,
                 Confirmation = detail.Confirmation
@@ -113,24 +138,13 @@ namespace NexusMD.MVC.Controllers
 
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, AppointmentEdit model)
+        public ActionResult Edit(AppointmentEdit model)
         {
             if (ModelState.IsValid)
             {
-                if (model.AppointmentId != id)
-                {
-                    ModelState.AddModelError("", "ID Mismatch");
-                    return View(model);
-                }
-
                 if (db.UpdateAppointment(model))
-                {
-                    TempData["SaveResult"] = "An Appointment was updated";
                     return RedirectToAction("Index");
-                }
             }
-
-            ModelState.AddModelError("", "Appointment could not be updated");
             return View(model);
         }
     }
