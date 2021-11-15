@@ -7,109 +7,131 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using NexusMD.Data;
+using NexusMD.Models.Appointment;
+using NexusMD.Services;
 
 namespace NexusMD.MVC.Controllers
 {
     public class AppointmentsController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private readonly AppointmentService db = new AppointmentService();
 
         public ActionResult Index()
         {
-            var appointments = db.Appointments.Include(a => a.Doctor).Include(a => a.Patient);
-            return View(appointments.ToList());
+            var viewModel = db.GetAllAppointments();
+            return View(viewModel);
         }
 
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
             }
-            Appointment appointment = db.Appointments.Find(id);
-            if (appointment == null)
+            var viewModel = db.GetAppointmentById((int)id);
+          
+            if (viewModel == null)
             {
                 return HttpNotFound();
             }
-            return View(appointment);
+            return View(viewModel);
         }
 
         public ActionResult Create()
         {
-            ViewBag.DoctorId = new SelectList(db.Doctors, "DoctorId", "FirstName");
-            ViewBag.PatientId = new SelectList(db.Patients, "PatientId", "FirstName");
-            return View();
+            var viewModel = new AppointmentCreate();
+            return View(viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "AppointmentId,PatientId,DoctorId,AppStart,AppEnd,ScheduledTime,Notes,Confirmation")] Appointment appointment)
+        public ActionResult Create(AppointmentCreate model)
         {
             if (ModelState.IsValid)
             {
-                db.Appointments.Add(appointment);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (db.CreateAppointment(model))
+                {
+                    TempData["SaveResult"] = "A new appointment was created.";
+                    return RedirectToAction("Index");
+                }
             }
-
-            ViewBag.DoctorId = new SelectList(db.Doctors, "DoctorId", "FirstName", appointment.DoctorId);
-            ViewBag.PatientId = new SelectList(db.Patients, "PatientId", "FirstName", appointment.PatientId);
-            return View(appointment);
-        }
-
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Appointment appointment = db.Appointments.Find(id);
-            if (appointment == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.DoctorId = new SelectList(db.Doctors, "DoctorId", "FirstName", appointment.DoctorId);
-            ViewBag.PatientId = new SelectList(db.Patients, "PatientId", "FirstName", appointment.PatientId);
-            return View(appointment);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "AppointmentId,PatientId,DoctorId,AppStart,AppEnd,ScheduledTime,Notes,Confirmation")] Appointment appointment)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(appointment).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.DoctorId = new SelectList(db.Doctors, "DoctorId", "FirstName", appointment.DoctorId);
-            ViewBag.PatientId = new SelectList(db.Patients, "PatientId", "FirstName", appointment.PatientId);
-            return View(appointment);
+            return View(model);
         }
 
         public ActionResult Delete(int? id)
         {
             if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Appointment appointment = db.Appointments.Find(id);
-            if (appointment == null)
-            {
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+
+            var viewModel = db.GetAppointmentById((int)id);
+
+            if (viewModel is null)
                 return HttpNotFound();
-            }
-            return View(appointment);
+
+            return View(viewModel);
         }
+
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult Delete(int id)
         {
-            Appointment appointment = db.Appointments.Find(id);
-            db.Appointments.Remove(appointment);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            if (db.DeleteAppointment(id))
+            {
+                TempData["SaveResult"] = "An appointment was deleted.";
+                return RedirectToAction("Index");
+            }
+
+
+            ModelState.AddModelError("", "Appointment could not be deleted.");
+
+            return View();
+        }
+
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+
+            var detail = db.GetAppointmentById((int)id);
+
+            if (detail is null)
+                return HttpNotFound();
+
+            var viewModel = new AppointmentEdit
+            {
+                AppointmentId = detail.AppointmentId,
+                StartDateTime = detail.StartDateTime,
+                DoctorId = detail.DoctorId,
+                Status = detail.Status,
+                Notes = detail.Notes,
+                Confirmation = detail.Confirmation
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost, ActionName("Edit")]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(int id, AppointmentEdit model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (model.AppointmentId != id)
+                {
+                    ModelState.AddModelError("", "ID Mismatch");
+                    return View(model);
+                }
+
+                if (db.UpdateAppointment(model))
+                {
+                    TempData["SaveResult"] = "An Appointment was updated";
+                    return RedirectToAction("Index");
+                }
+            }
+
+            ModelState.AddModelError("", "Appointment could not be updated");
+            return View(model);
         }
     }
 }
