@@ -16,15 +16,11 @@ namespace NexusMD.MVC.Controllers
 {
     public class AppointmentsController : Controller
     {
-        private readonly AppointmentService db = new AppointmentService();
-
         private readonly ApplicationDbContext _db = new ApplicationDbContext();
 
-        public ActionResult Index(int? id)
+        public ActionResult Index()
         {
-            var model = db.GetAllAppointments((int)id);
-
-            return View(model);
+            return View(_db.Appointments.ToList());
         }
 
         public ActionResult Details(int? id)
@@ -33,91 +29,95 @@ namespace NexusMD.MVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var viewModel = db.GetAppointmentById((int)id);
-          
-            if (viewModel == null)
+            Appointment appointment = _db.Appointments.Find(id);
+            if (appointment == null)
             {
                 return HttpNotFound();
             }
-            return View(viewModel);
+            return View(appointment);
         }
 
         public ActionResult Create()
         {
-            AppointmentCreate model = new AppointmentCreate
-            {
-                PatientList = new SelectList(_db.Patients, "PatientId"),
-                DoctorList = new SelectList(_db.Doctors, "DoctorId")
-            };
+            return View();
+            //AppointmentCreate model = new AppointmentCreate
+            //{
+            //    PatientList = new SelectList(_db.Patients, "PatientId"),
+            //    DoctorList = new SelectList(_db.Doctors, "DoctorId")
+            //};
 
-            return View(model);
+            //return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Appointment appointment)
         {
-            AppointmentCreate model = new AppointmentCreate
+            if (!ModelState.IsValid)
             {
-                PatientList = new SelectList(_db.Patients, "PatientId"),
-                DoctorList = new SelectList(_db.Doctors, "DoctorId")
-            };
+                _db.Appointments.Add(appointment);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            //AppointmentCreate model = new AppointmentCreate
+            //{
+            //    PatientList = new SelectList(_db.Patients, "PatientId"),
+            //    DoctorList = new SelectList(_db.Doctors, "DoctorId")
+            //};
 
-            return View(model);
+            return View(appointment);
         }
 
         public ActionResult Delete(int? id)
         {
             if (id == null)
+            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-
-            var viewModel = db.GetAppointmentById((int)id);
-                return View(viewModel);
+            }
+            Appointment appointment = _db.Appointments.Find(id);
+            if (appointment == null)
+            {
+                return HttpNotFound();
+            }
+            return View(appointment);
         }
 
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id)
+        public ActionResult DeleteConfirmed(int id)
         {
-            if (db.DeleteAppointment(id))
-                return RedirectToAction("Index");
-
-            return View();
+            Appointment appointment = _db.Appointments.Find(id);
+            _db.Appointments.Remove(appointment);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         public ActionResult Edit(int? id)
         {
             if (id == null)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-
-            var detail = db.GetAppointmentById((int)id);
-
-            if (detail is null)
-                return HttpNotFound();
-
-            var viewModel = new AppointmentEdit
             {
-                AppointmentId = detail.AppointmentId,
-                StartDateTime = detail.StartDateTime,
-                Status = detail.Status,
-                Notes = detail.Notes,
-                Confirmation = detail.Confirmation
-            };
-
-            return View(viewModel);
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Appointment appointment = _db.Appointments.Find(id);
+            if (appointment == null)
+            {
+                return HttpNotFound();
+            }
+            return View(appointment);
         }
 
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(AppointmentEdit model)
+        public ActionResult Edit(AppointmentEdit appointment)
         {
             if (ModelState.IsValid)
             {
-                if (db.UpdateAppointment(model))
-                    return RedirectToAction("Index");
+                _db.Entry(appointment).State = EntityState.Modified;
+                _db.SaveChanges();
+                return RedirectToAction("Index");
             }
-            return View(model);
+            return View(appointment);
         }
     }
 }
