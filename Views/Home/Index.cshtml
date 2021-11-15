@@ -1,11 +1,13 @@
-﻿@{
+﻿@model IEnumerable<NexusMD.Data.Appointment>
+
+@{
     ViewBag.Title = "Home Page";
 }
 
 @*<div class="jumbotron">
-    <h1>NexusMD</h1>
-    <p class="lead">Welcome to Nexus MD, the next generation in Patient Managment Systems.</p>
-</div>*@
+        <h1>NexusMD</h1>
+        <p class="lead">Welcome to Nexus MD, the next generation in Patient Managment Systems.</p>
+    </div>*@
 
 <div class="row">
     <div class="col-lg-3 col-xs-6">
@@ -32,7 +34,7 @@
                 <i class="fas fa-user-injured"></i>
             </div>
             <a href="/Patients/" class="small-box-footer">
-                More info <i class="fas fa-arrow-circle-right"></i>
+                More info <i class="fas fa-caret-right"> </i>
             </a>
         </div>
     </div>
@@ -46,7 +48,7 @@
                 <i class="fas fa-calendar-check"></i>
             </div>
             <a href="/Appointments/" class="small-box-footer">
-                More info <i class="fas fa-arrow-circle-right"></i>
+                More info <i class="fas fa-caret-right"> </i>
             </a>
         </div>
     </div>
@@ -60,21 +62,147 @@
                 <i class="fas fa-user-plus"></i>
             </div>
             <a href="/Patients/Create" class="small-box-footer">
-                More info <i class="fas fa-arrow-circle-right"></i>
+                More info <i class="fas fa-caret-right"> </i>
             </a>
         </div>
     </div>
 </div>
+
+<!--Appointment Tables-->
+<div class="row" style=flex;>
+    <div class="col-md-12">
+        <div class="card card-dark">
+            <div class="card-header">
+                <h3 class="card-title">Scheduled Appointments</h3>
+                <div class="card-tools badge badge-primary">
+                    <!-- Buttons, labels, and many other things can be placed here! -->
+                    @Html.ActionLink("View Appointment", "Index", "Appointments/Index")
+                    @*<span class="badge badge-primary">#2</span>*@
+                </div>
+                <!-- /.card-tools -->
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body table-responsive p-0" style="height: 300px;">
+                <table class="table table-head-fixed text-nowrap">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Patient</th>
+                            <th>Scheduled Date</th>
+                            <th>Doctor</th>
+                            <th>Visit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>183</td>
+                            <td>John Doe</td>
+                            <td>11-7-2014</td>
+                            <td><span class="tag tag-success">Approved</span></td>
+                            <td>empty</td>
+                        </tr>
+                        <tr>
+                            <td>219</td>
+                            <td>Alexander Pierce</td>
+                            <td>11-7-2014</td>
+                            <td><span class="tag tag-warning">Pending</span></td>
+                            <td>empty</td>
+                        </tr>
+                        <tr>
+                            <td>657</td>
+                            <td>Bob Doe</td>
+                            <td>11-7-2014</td>
+                            <td><span class="tag tag-primary">Approved</span></td>
+                            <td>empty</td>
+                        </tr>
+                        <tr>
+                            <td>175</td>
+                            <td>Mike Doe</td>
+                            <td>11-7-2014</td>
+                            <td><span class="tag tag-danger">Denied</span></td>
+                            <td>empty</td>
+                        </tr>
+                        <tr>
+                            <td>134</td>
+                            <td>Jim Doe</td>
+                            <td>11-7-2014</td>
+                            <td><span class="tag tag-success">Approved</span></td>
+                            <td>empty</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        <!-- /.card -->
+    </div>
+</div>
+<!--Appointment 3-->
+<div class="row" style=flex;>
+    <div class="col-md-12">
+        <div class="card card-dark">
+            <div class="card-header">
+                <h3 class="card-title">Scheduled Appointment 3</h3>
+                <div class="card-tools badge badge-primary">
+                    <!-- Buttons, labels, and many other things can be placed here! -->
+                    @Html.ActionLink("View Appointment", "Index", "Appointments/Index")
+                    @*<span class="badge badge-primary">#2</span>*@
+                </div>
+            </div>
+            <div class="card-body">
+                <dl>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Doctor.FirstName)
+                    </dt>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Patient.FirstName)
+                    </dt>
+
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.AppointmentStart)
+                    </dt>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.AppointmentEnd)
+                    </dt>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ScheduledDate)
+                    </dt>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Notes)
+                    </dt>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Confirmation)
+                    </dt>
+
+                </dl>
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer badge badge-primary">
+                <!-- Buttons, labels, and many other things can be placed here! -->
+                @Html.ActionLink("Edit Appointment", "Index", "Appointments/Index")
+                @*<span class="badge badge-primary">#2</span>*@
+            </div>
+            <!-- /.card-footer -->
+        </div>
+        <!-- /.card -->
+    </div>
+</div>
+
 <div id='calendar'></div>
+
 @section scripts {
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-        var calendarEl = document.getElementById('calendar');
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-            plugins: ['dayGrid', 'bootstrap'],
-            themeSystem: 'bootstrap'
-        });
-        calendar.render();
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                plugins: ['dayGrid', 'bootstrap'],
+                themeSystem: 'bootstrap'
+            });
+            calendar.render();
         });
     </script>
 }
