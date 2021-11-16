@@ -4,7 +4,7 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Current Appointments</h2>
+<h2>Index</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -12,19 +12,10 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.AppointmentId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Doctors)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Patients)
+            @Html.DisplayNameFor(model => model.Status)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.StartDateTime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Status)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Notes)
@@ -32,38 +23,41 @@
         <th>
             @Html.DisplayNameFor(model => model.Confirmation)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DoctorId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PatientId)
+        </th>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
-<tr>
-    <td>
-        @Html.DisplayFor(modelItem => item.AppointmentId)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Doctors)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Patients)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.StartDateTime)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Status)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Notes)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Confirmation)
-    </td>
-    <td>
-        @Html.ActionLink("Edit", "Edit", new { id = item.AppointmentId }) |
-        @Html.ActionLink("Details", "Details", new { id = item.AppointmentId }) |
-        @Html.ActionLink("Delete", "Delete", new { id = item.AppointmentId })
-    </td>
-</tr>
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StartDateTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Notes)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Confirmation)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DoctorId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PatientId)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.AppointmentId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.AppointmentId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.AppointmentId })
+        </td>
+    </tr>
 }
 
 </table>
