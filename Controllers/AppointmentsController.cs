@@ -13,6 +13,7 @@ using NexusMD.Data;
 using NexusMD.Models.Appointment;
 using NexusMD.MVC.Models;
 using NexusMD.Services;
+using SelectListItem = System.Web.Mvc.SelectListItem;
 
 namespace NexusMD.MVC.Controllers
 {
@@ -22,7 +23,7 @@ namespace NexusMD.MVC.Controllers
 
         public ActionResult Index()
         {
-            var appointments = _db.Appointments.ToList();
+            var appointments = _db.Appointments.Include("Doctor").Include("Patient");
             return View(appointments);
         }
 
@@ -51,6 +52,17 @@ namespace NexusMD.MVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Appointment appointment)
         {
+            var p = _db.Patients.Select(r => r.FirstName);
+
+            var d = _db.Doctors.Select(r => r.FirstName);
+
+            var viewModel = new AppointmentViewModel
+            {
+                Patient = new SelectList(p),
+
+                Doctor = new SelectList(d)
+            };
+
             _db.Appointments.Add(appointment);
             _db.SaveChanges();
             return RedirectToAction("Index");
