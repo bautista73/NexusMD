@@ -58,9 +58,28 @@
       <HintPath>packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Extensions.Configuration.Abstractions, Version=3.1.21.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Extensions.Configuration.Abstractions.3.1.21\lib\netstandard2.0\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Primitives, Version=3.1.21.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Extensions.Primitives.3.1.21\lib\netstandard2.0\Microsoft.Extensions.Primitives.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Buffers.4.4.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Memory, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Memory.4.5.2\lib\netstandard2.0\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Numerics.Vectors.4.4.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.6.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Runtime.CompilerServices.Unsafe.4.7.1\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -179,13 +198,12 @@
     <Compile Include="Controllers\DoctorsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\PatientProfilesController.cs" />
     <Compile Include="Controllers\PatientsController.cs" />
-    <Compile Include="Controllers\VisitsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AppointmentViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -205,12 +223,6 @@
     <Content Include="adminlte\css\alt\adminlte.pages.min.css" />
     <Content Include="adminlte\css\alt\adminlte.plugins.css" />
     <Content Include="adminlte\css\alt\adminlte.plugins.min.css" />
-    <Content Include="adminlte\img\AdminLTELogo.png" />
-    <Content Include="adminlte\img\avatar.png" />
-    <Content Include="adminlte\img\avatar2.png" />
-    <Content Include="adminlte\img\avatar3.png" />
-    <Content Include="adminlte\img\avatar4.png" />
-    <Content Include="adminlte\img\avatar5.png" />
     <Content Include="adminlte\img\boxed-bg.jpg" />
     <Content Include="adminlte\img\boxed-bg.png" />
     <Content Include="adminlte\img\credit\american-express.png" />
@@ -219,25 +231,11 @@
     <Content Include="adminlte\img\credit\paypal.png" />
     <Content Include="adminlte\img\credit\paypal2.png" />
     <Content Include="adminlte\img\credit\visa.png" />
+    <Content Include="adminlte\img\d1.png" />
+    <Content Include="adminlte\img\d2.png" />
     <Content Include="adminlte\img\default-150x150.png" />
+    <Content Include="adminlte\img\doc2.png" />
     <Content Include="adminlte\img\icons.png" />
-    <Content Include="adminlte\img\photo1.png" />
-    <Content Include="adminlte\img\photo2.png" />
-    <Content Include="adminlte\img\photo3.jpg" />
-    <Content Include="adminlte\img\photo4.jpg" />
-    <Content Include="adminlte\img\prod-1.jpg" />
-    <Content Include="adminlte\img\prod-2.jpg" />
-    <Content Include="adminlte\img\prod-3.jpg" />
-    <Content Include="adminlte\img\prod-4.jpg" />
-    <Content Include="adminlte\img\prod-5.jpg" />
-    <Content Include="adminlte\img\user1-128x128.jpg" />
-    <Content Include="adminlte\img\user2-160x160.jpg" />
-    <Content Include="adminlte\img\user3-128x128.jpg" />
-    <Content Include="adminlte\img\user4-128x128.jpg" />
-    <Content Include="adminlte\img\user5-128x128.jpg" />
-    <Content Include="adminlte\img\user6-128x128.jpg" />
-    <Content Include="adminlte\img\user7-128x128.jpg" />
-    <Content Include="adminlte\img\user8-128x128.jpg" />
     <Content Include="adminlte\js\adminlte.js" />
     <Content Include="adminlte\js\adminlte.min.js" />
     <Content Include="adminlte\js\demo.js" />
@@ -2316,26 +2314,15 @@
     <Content Include="Views\Patients\Details.cshtml" />
     <Content Include="Views\Patients\Edit.cshtml" />
     <Content Include="Views\Patients\Index.cshtml" />
-    <Content Include="Views\Appointments\Create.cshtml" />
     <Content Include="Views\Appointments\Delete.cshtml" />
     <Content Include="Views\Appointments\Details.cshtml" />
     <Content Include="Views\Appointments\Edit.cshtml" />
     <Content Include="Views\Appointments\Index.cshtml" />
-    <Content Include="Views\Visits\Create.cshtml" />
-    <Content Include="Views\Visits\Delete.cshtml" />
-    <Content Include="Views\Visits\Details.cshtml" />
-    <Content Include="Views\Visits\Edit.cshtml" />
-    <Content Include="Views\Visits\Index.cshtml" />
     <Content Include="Views\Doctors\Create.cshtml" />
     <Content Include="Views\Doctors\Delete.cshtml" />
     <Content Include="Views\Doctors\Details.cshtml" />
     <Content Include="Views\Doctors\Edit.cshtml" />
     <Content Include="Views\Doctors\Index.cshtml" />
-    <Content Include="Views\PatientProfiles\Create.cshtml" />
-    <Content Include="Views\PatientProfiles\Delete.cshtml" />
-    <Content Include="Views\PatientProfiles\Details.cshtml" />
-    <Content Include="Views\PatientProfiles\Edit.cshtml" />
-    <Content Include="Views\PatientProfiles\Index.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />
     <Content Include="Scripts\umd\popper.js.flow" />
@@ -2346,6 +2333,7 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\Appointments\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

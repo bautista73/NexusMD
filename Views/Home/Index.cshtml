@@ -4,16 +4,11 @@
     ViewBag.Title = "Home Page";
 }
 
-@*<div class="jumbotron">
-        <h1>NexusMD</h1>
-        <p class="lead">Welcome to Nexus MD, the next generation in Patient Managment Systems.</p>
-    </div>*@
-
 <div class="row">
     <div class="col-lg-3 col-xs-6">
         <div class="small-box bg-gradient-success">
             <div class="inner">
-                <h3>1</h3>
+                <h3>3</h3>
                 <p>Doctors</p>
             </div>
             <div class="icon">
@@ -27,7 +22,7 @@
     <div class="col-lg-3 col-xs-6">
         <div class="small-box bg-info">
             <div class="inner">
-                <h3>5</h3>
+                <h3>6</h3>
                 <p>Patients</p>
             </div>
             <div class="icon">
@@ -67,21 +62,20 @@
         </div>
     </div>
 </div>
-
+<br />
+<div>
+    <h4 style="color:lightgray">Appointment Schedule</h4>
+</div>
 <!--Appointment Tables-->
 <div class="row" style=flex;>
     <div class="col-md-12">
         <div class="card card-dark">
             <div class="card-header">
                 <h3 class="card-title">Scheduled Appointments</h3>
-                <div class="card-tools badge badge-primary">
-                    <!-- Buttons, labels, and many other things can be placed here! -->
-                    @Html.ActionLink("View Appointment", "Index", "Appointments")
-                    @*<span class="badge badge-primary">#2</span>*@
+                <div class="card-tools badge badge-success">
+                    @Html.ActionLink("View Appointments", "Index", "Appointments")
                 </div>
-                <!-- /.card-tools -->
             </div>
-            <!-- /.card-header -->
             <div class="card-body table-responsive p-0" style="height: 300px;">
                 <table class="table table-head-fixed text-nowrap">
                     <thead>
@@ -134,57 +128,60 @@
             </div>
         </div>
     </div>
+    <!-- USER 1 -->
 </div>
-<!--Appointment 3-->
-<div class="row" style=flex;>
-    <div class="col-md-12">
-        <div class="card card-dark">
-            <div class="card-header">
-                <h3 class="card-title">Scheduled Appointment 3</h3>
-                <div class="card-tools badge badge-primary">
-                    <!-- Buttons, labels, and many other things can be placed here! -->
-                    @Html.ActionLink("View Appointment", "Index", "Appointments")
-                    @*<span class="badge badge-primary">#2</span>*@
-                </div>
+<br />
+<div>
+    <h4 style="color:lightgray">Today's Available Doctors</h4>
+</div>
+<div class="row" style="text-align: center;">
+    <div class="col-md-4">
+        <div class="card">
+            <div class=" " style="text-align: center;">
+                <h3 class=" " style="text-align: center; font-size: 19px; padding-top: 13px;">Dr. Ileana Rodriguez</h3>
             </div>
-            <div class="card-body">
-                <dl>
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Doctor.FirstName)
-                    </dt>
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Patient.FirstName)
-                    </dt>
-
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.StartDateTime)
-                    </dt>
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Status)
-                    </dt>
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Notes)
-                    </dt>
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Confirmation)
-                    </dt>
-
-                </dl>
+            <div class="docpic p-6" style="display:block; margin-left:auto; margin-right:auto">
+                <img src="~/adminlte/img/doc2.png" style="max-width: 80%; height: auto; padding-top: 10px;" alt="N/A">
+                <span class="users-list-date" style="color: lightgray; font-size: 19px; padding-bottom: 10px; padding-top: 10px;">Surgeon</span>
             </div>
-            <!-- /.card-body -->
-            <div class="card-footer badge badge-primary">
-                <!-- Buttons, labels, and many other things can be placed here! -->
-                @Html.ActionLink("Edit Appointment", "Index", "Appointments/Index")
-                @*<span class="badge badge-primary">#2</span>*@
+            <div class="card-footer text-center">
+                <a href="/Doctors/Details/4" class="btn btn-block btn-outline-success btn-xs">
+                    View Doctor
+                </a>
             </div>
-            <!-- /.card-footer -->
         </div>
-        <!-- /.card -->
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class=" " style="text-align: center;">
+                <h3 class=" " style="text-align: center; font-size: 19px; padding-top: 13px;">Dr. Helene Gayle</h3>
+            </div>
+            <div class="docpic p-6" style="display:block; margin-left:auto; margin-right:auto">
+                <img src="~/adminlte/img/d1.png" style="max-width: 80%; height: auto; padding-top: 10px;" alt="N/A">
+                <span class="users-list-date" style="color: lightgray; font-size: 19px; padding-bottom: 10px; padding-top: 10px;">Cardiologist</span>
+            </div>
+            <div class="card-footer text-center">
+                <a href="/Doctors/" class="btn btn-block btn-outline-info btn-xs">
+                    View Doctor
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class=" " style="text-align: center;">
+                <h3 class=" " style="text-align: center; font-size: 19px; padding-top: 13px;">Dr. Ken Jeong</h3>
+            </div>
+            <div class="docpic p-6" style="display:block; margin-left:auto; margin-right:auto">
+                <img src="~/adminlte/img/d2.png" style="max-width: 80%; height: auto; padding-top: 10px;" alt="N/A">
+                <span class="users-list-date" style="color: lightgray; font-size: 19px; padding-bottom: 10px; padding-top: 10px;">Pathologist</span>
+            </div>
+            <div class="card-footer text-center">
+                <a href="/Doctors/" class="btn btn-block btn-outline-warning btn-xs">
+                    View Doctor
+                </a>
+            </div>
+        </div>
     </div>
 </div>
 

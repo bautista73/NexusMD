@@ -4830,11 +4830,31 @@ input[type="button"].btn-block {
   border-top: 0;
 }
 
-.card-body {
+/*.card-body {
   -ms-flex: 1 1 auto;
   flex: 1 1 auto;
   min-height: 1px;
   padding: 1.25rem;
+}*/
+
+.card-body-2 {
+    position:center;
+    height: 50%;
+    width: 50%;
+}
+
+.specialty {
+    text-align:center;
+    font-size:5px
+}
+
+#docphoto {
+    border-width: 0px;
+    margin: 0px;
+    padding: 0px;
+    position: absolute;
+    width: 25%;
+    height: 25%;
 }
 
 .card-title {
@@ -8354,9 +8374,9 @@ button.bg-dark:focus {
   margin-left: 3rem !important;
 }
 
-.p-0 {
+/*.p-0 {
   padding: 0 !important;
-}
+}*/
 
 .pt-0,
 .py-0 {
@@ -34544,6 +34564,7 @@ a.close.disabled, a.disabled.mailbox-attachment-close {
   border-left-color: #343a40;
 }
 
+
 .users-list {
   padding-left: 0;
   list-style: none;
@@ -34569,7 +34590,6 @@ a.close.disabled, a.disabled.mailbox-attachment-close {
 
 .users-list-name,
 .users-list-date {
-  display: block;
 }
 
 .users-list-name {
@@ -34581,7 +34601,7 @@ a.close.disabled, a.disabled.mailbox-attachment-close {
 }
 
 .users-list-date {
-  color: #748290;
+  color: red;
   font-size: 12px;
 }
 

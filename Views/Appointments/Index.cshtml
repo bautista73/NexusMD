@@ -12,13 +12,13 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Doctor)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Patient)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.AppointmentId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Doctors)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Patients)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.StartDateTime)
@@ -36,34 +36,34 @@
     </tr>
 
 @foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Doctor)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Patient)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AppointmentId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.StartDateTime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Status)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Notes)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Confirmation)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.AppointmentId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.AppointmentId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.AppointmentId })
-        </td>
-    </tr>
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.AppointmentId)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Doctors)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Patients)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.StartDateTime)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Status)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Notes)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Confirmation)
+    </td>
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { id = item.AppointmentId }) |
+        @Html.ActionLink("Details", "Details", new { id = item.AppointmentId }) |
+        @Html.ActionLink("Delete", "Delete", new { id = item.AppointmentId })
+    </td>
+</tr>
 }
 
 </table>
