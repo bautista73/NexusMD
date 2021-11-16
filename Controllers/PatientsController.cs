@@ -14,13 +14,11 @@ namespace NexusMD.MVC.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Patients
         public ActionResult Index()
         {
             return View(db.Patients.ToList());
         }
 
-        // GET: Patients/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -35,15 +33,11 @@ namespace NexusMD.MVC.Controllers
             return View(patient);
         }
 
-        // GET: Patients/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Patients/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "PatientId,PatientNumber,FirstName,LastName,Gender,BirthDate,Age,PhoneNumber,Address,Height,Weight,BloodType")] Patient patient)
@@ -58,7 +52,6 @@ namespace NexusMD.MVC.Controllers
             return View(patient);
         }
 
-        // GET: Patients/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -73,9 +66,6 @@ namespace NexusMD.MVC.Controllers
             return View(patient);
         }
 
-        // POST: Patients/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "PatientId,PatientNumber,FirstName,LastName,Gender,BirthDate,Age,PhoneNumber,Address,Height,Weight,BloodType")] Patient patient)
@@ -89,7 +79,6 @@ namespace NexusMD.MVC.Controllers
             return View(patient);
         }
 
-        // GET: Patients/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -104,7 +93,6 @@ namespace NexusMD.MVC.Controllers
             return View(patient);
         }
 
-        // POST: Patients/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -113,15 +101,6 @@ namespace NexusMD.MVC.Controllers
             db.Patients.Remove(patient);
             db.SaveChanges();
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

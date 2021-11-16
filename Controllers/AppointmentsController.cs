@@ -6,109 +6,91 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.WebPages.Html;
+using DocumentFormat.OpenXml.Spreadsheet;
+using DocumentFormat.OpenXml.Wordprocessing;
 using NexusMD.Data;
+using NexusMD.Models.Appointment;
+using NexusMD.MVC.Models;
+using NexusMD.Services;
 
 namespace NexusMD.MVC.Controllers
 {
     public class AppointmentsController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private readonly ApplicationDbContext _db = new ApplicationDbContext();
 
         public ActionResult Index()
         {
-            var appointments = db.Appointments.Include(a => a.Doctor).Include(a => a.Patient);
-            return View(appointments.ToList());
+            var appointments = _db.Appointments.ToList();
+            return View(appointments);
         }
 
-        public ActionResult Details(int? id)
+        public ActionResult Details(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Appointment appointment = db.Appointments.Find(id);
-            if (appointment == null)
-            {
-                return HttpNotFound();
-            }
+            Appointment appointment = _db.Appointments.Where(x => x.AppointmentId == id).SingleOrDefault();
             return View(appointment);
         }
 
         public ActionResult Create()
         {
-            ViewBag.DoctorId = new SelectList(db.Doctors, "DoctorId", "FirstName");
-            ViewBag.PatientId = new SelectList(db.Patients, "PatientId", "FirstName");
-            return View();
+            var p = _db.Patients.Select(r => r.FirstName);
+
+            var d = _db.Doctors.Select(r => r.FirstName);
+
+            var viewModel = new AppointmentViewModel
+            {
+                Patient = new SelectList(p),
+
+                Doctor = new SelectList(d)
+            };
+            return View(viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "AppointmentId,PatientId,DoctorId,AppStart,AppEnd,ScheduledTime,Notes,Confirmation")] Appointment appointment)
+        public ActionResult Create(Appointment appointment)
         {
-            if (ModelState.IsValid)
-            {
-                db.Appointments.Add(appointment);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            ViewBag.DoctorId = new SelectList(db.Doctors, "DoctorId", "FirstName", appointment.DoctorId);
-            ViewBag.PatientId = new SelectList(db.Patients, "PatientId", "FirstName", appointment.PatientId);
-            return View(appointment);
+            _db.Appointments.Add(appointment);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Appointment appointment = db.Appointments.Find(id);
-            if (appointment == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.DoctorId = new SelectList(db.Doctors, "DoctorId", "FirstName", appointment.DoctorId);
-            ViewBag.PatientId = new SelectList(db.Patients, "PatientId", "FirstName", appointment.PatientId);
+            Appointment appointment = _db.Appointments.Where(x => x.AppointmentId == id).SingleOrDefault();
             return View(appointment);
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "AppointmentId,PatientId,DoctorId,AppStart,AppEnd,ScheduledTime,Notes,Confirmation")] Appointment appointment)
+        public ActionResult Edit(Appointment model)
         {
-            if (ModelState.IsValid)
+            Appointment appointment = _db.Appointments.Where(x => x.AppointmentId == model.AppointmentId).SingleOrDefault();
+            if(appointment != null)
             {
-                db.Entry(appointment).State = EntityState.Modified;
-                db.SaveChanges();
+                _db.Entry(appointment).CurrentValues.SetValues(appointment);
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.DoctorId = new SelectList(db.Doctors, "DoctorId", "FirstName", appointment.DoctorId);
-            ViewBag.PatientId = new SelectList(db.Patients, "PatientId", "FirstName", appointment.PatientId);
+            return View(model);
+        }
+
+        public ActionResult Delete(int id)
+        {
+            Appointment appointment = _db.Appointments.Find(id);
             return View(appointment);
         }
 
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Appointment appointment = db.Appointments.Find(id);
-            if (appointment == null)
-            {
-                return HttpNotFound();
-            }
-            return View(appointment);
-        }
 
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        [HttpPost]
+        public ActionResult Delete(int id, Appointment model)
         {
-            Appointment appointment = db.Appointments.Find(id);
-            db.Appointments.Remove(appointment);
-            db.SaveChanges();
+            var appointment = _db.Appointments.Where(x => x.AppointmentId == id).SingleOrDefault();
+            if (appointment != null)
+            {
+                _db.Appointments.Remove(appointment);
+                _db.SaveChanges();
+            }
             return RedirectToAction("Index");
         }
     }

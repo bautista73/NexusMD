@@ -1,31 +1,201 @@
-﻿@{
+﻿@model IEnumerable<NexusMD.Data.Appointment>
+
+@{
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
-    <h1>NexusMD</h1>
-    <p class="lead">Welcome to Nexus MD, the next generation in Patient Managment Systems.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+<div class="row">
+    <div class="col-lg-3 col-xs-6">
+        <div class="small-box bg-gradient-success">
+            <div class="inner">
+                <h3>3</h3>
+                <p>Doctors</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-stethoscope"></i>
+            </div>
+            <a href="/Doctors/" class="small-box-footer">
+                More Info <i class="fas fa-caret-right"> </i>
+            </a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-xs-6">
+        <div class="small-box bg-info">
+            <div class="inner">
+                <h3>6</h3>
+                <p>Patients</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-user-injured"></i>
+            </div>
+            <a href="/Patients/" class="small-box-footer">
+                More info <i class="fas fa-caret-right"> </i>
+            </a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-xs-6">
+        <div class="small-box bg-purple">
+            <div class="inner">
+                <h3>2</h3>
+                <p>Appointments</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-calendar-check"></i>
+            </div>
+            <a href="/Appointments/" class="small-box-footer">
+                More info <i class="fas fa-caret-right"> </i>
+            </a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-xs-6">
+        <div class="small-box bg-pink">
+            <div class="inner">
+                <h3>0</h3>
+                <p>New Patient</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-user-plus"></i>
+            </div>
+            <a href="/Patients/Create" class="small-box-footer">
+                More info <i class="fas fa-caret-right"> </i>
+            </a>
+        </div>
+    </div>
+</div>
+<br />
+<div>
+    <h4 style="color:lightgray">Appointment Schedule</h4>
+</div>
+<!--Appointment Tables-->
+<div class="row" style=flex;>
+    <div class="col-md-12">
+        <div class="card card-dark">
+            <div class="card-header">
+                <h3 class="card-title">Scheduled Appointments</h3>
+                <div class="card-tools badge badge-success">
+                    @Html.ActionLink("View Appointments", "Index", "Appointments")
+                </div>
+            </div>
+            <div class="card-body table-responsive p-0" style="height: 300px;">
+                <table class="table table-head-fixed text-nowrap">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Patient</th>
+                            <th>Scheduled Date</th>
+                            <th>Doctor</th>
+                            <th>Visit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>183</td>
+                            <td>John Doe</td>
+                            <td>11-7-2014</td>
+                            <td><span class="tag tag-success">Approved</span></td>
+                            <td>empty</td>
+                        </tr>
+                        <tr>
+                            <td>219</td>
+                            <td>Alexander Pierce</td>
+                            <td>11-7-2014</td>
+                            <td><span class="tag tag-warning">Pending</span></td>
+                            <td>empty</td>
+                        </tr>
+                        <tr>
+                            <td>657</td>
+                            <td>Bob Doe</td>
+                            <td>11-7-2014</td>
+                            <td><span class="tag tag-primary">Approved</span></td>
+                            <td>empty</td>
+                        </tr>
+                        <tr>
+                            <td>175</td>
+                            <td>Mike Doe</td>
+                            <td>11-7-2014</td>
+                            <td><span class="tag tag-danger">Denied</span></td>
+                            <td>empty</td>
+                        </tr>
+                        <tr>
+                            <td>134</td>
+                            <td>Jim Doe</td>
+                            <td>11-7-2014</td>
+                            <td><span class="tag tag-success">Approved</span></td>
+                            <td>empty</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- USER 1 -->
+</div>
+<br />
+<div>
+    <h4 style="color:lightgray">Today's Available Doctors</h4>
+</div>
+<div class="row" style="text-align: center;">
+    <div class="col-md-4">
+        <div class="card">
+            <div class=" " style="text-align: center;">
+                <h3 class=" " style="text-align: center; font-size: 19px; padding-top: 13px;">Dr. Ileana Rodriguez</h3>
+            </div>
+            <div class="docpic p-6" style="display:block; margin-left:auto; margin-right:auto">
+                <img src="~/adminlte/img/doc2.png" style="max-width: 80%; height: auto; padding-top: 10px;" alt="N/A">
+                <span class="users-list-date" style="color: lightgray; font-size: 19px; padding-bottom: 10px; padding-top: 10px;">Surgeon</span>
+            </div>
+            <div class="card-footer text-center">
+                <a href="/Doctors/Details/4" class="btn btn-block btn-outline-success btn-xs">
+                    View Doctor
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class=" " style="text-align: center;">
+                <h3 class=" " style="text-align: center; font-size: 19px; padding-top: 13px;">Dr. Helene Gayle</h3>
+            </div>
+            <div class="docpic p-6" style="display:block; margin-left:auto; margin-right:auto">
+                <img src="~/adminlte/img/d1.png" style="max-width: 80%; height: auto; padding-top: 10px;" alt="N/A">
+                <span class="users-list-date" style="color: lightgray; font-size: 19px; padding-bottom: 10px; padding-top: 10px;">Cardiologist</span>
+            </div>
+            <div class="card-footer text-center">
+                <a href="/Doctors/" class="btn btn-block btn-outline-info btn-xs">
+                    View Doctor
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class=" " style="text-align: center;">
+                <h3 class=" " style="text-align: center; font-size: 19px; padding-top: 13px;">Dr. Ken Jeong</h3>
+            </div>
+            <div class="docpic p-6" style="display:block; margin-left:auto; margin-right:auto">
+                <img src="~/adminlte/img/d2.png" style="max-width: 80%; height: auto; padding-top: 10px;" alt="N/A">
+                <span class="users-list-date" style="color: lightgray; font-size: 19px; padding-bottom: 10px; padding-top: 10px;">Pathologist</span>
+            </div>
+            <div class="card-footer text-center">
+                <a href="/Doctors/" class="btn btn-block btn-outline-warning btn-xs">
+                    View Doctor
+                </a>
+            </div>
+        </div>
+    </div>
 </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+<div id='calendar'></div>
+
+@section scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                plugins: ['dayGrid', 'bootstrap'],
+                themeSystem: 'bootstrap'
+            });
+            calendar.render();
+        });
+    </script>
+}
