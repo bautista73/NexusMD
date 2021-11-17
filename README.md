@@ -1,4 +1,4 @@
-# <img src="https://github.com/bautista73/NexusMD/blob/master/adminlte/img/WhiteLogo.png">
+# <p align="center"><img src="https://github.com/bautista73/NexusMD/blob/master/adminlte/img/WhiteLogo.png" width="200" height="200"></p>
 A Patient Managment System for Medical Practices
 
 Welcome to my final project for Eleven Fifty Academy. This Web Application is future based development to create a well rounded, modern and modular patient
