@@ -10,7 +10,8 @@ namespace NexusMD.MVC.Models
 {
     public class AppointmentViewModel
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Display(Name = "Appointment Number")]
         public int AppointmentId { get; set; }
 
