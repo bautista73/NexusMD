@@ -228,6 +228,7 @@
     <Content Include="adminlte\img\boxed-bg.png" />
     <Content Include="adminlte\img\credit\american-express.png" />
     <Content Include="adminlte\img\credit\cirrus.png" />
+    <Content Include="adminlte\img\MainLogo.png" />
     <Content Include="adminlte\img\credit\mastercard.png" />
     <Content Include="adminlte\img\credit\paypal.png" />
     <Content Include="adminlte\img\credit\paypal2.png" />
